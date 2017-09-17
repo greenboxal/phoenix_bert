@@ -1,7 +1,7 @@
 defmodule PhoenixBert.Mixfile do
   use Mix.Project
 
-  @version "0.1.0"
+  @version "1.0.0"
   @github "https://github.com/veyond-card/phoenix_bert"
 
   def project do
