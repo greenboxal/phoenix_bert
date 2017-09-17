@@ -15,6 +15,14 @@ Add the following configuration to phoenix:
 And add "bert" as an acceptable format to :accepts plug
 
     plug :accepts, ["json", "bert"]
+    
+Render a view with BERT:
+
+    render(conn, "user.bert", %{name: "Test"})
+    
+Render BERT directly:
+
+    PhoenixBert.Conn.bert(conn, %{name: "Test"})
 
 ## License
 
