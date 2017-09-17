@@ -26,6 +26,6 @@ Render BERT directly:
 
 ## License
 
-Plug source code is released under MIT License.
+Phoenix BERT source code is released under MIT License.
 Check LICENSE file for more information.
 
