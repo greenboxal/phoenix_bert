@@ -1,4 +1,4 @@
-defmodule PhoenixBert.ConnTest do
+defmodule PhoenixBert.ConnectionTest do
   use ExUnit.Case, async: true
 
   import PhoenixBert.Conn

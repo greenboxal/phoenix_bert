@@ -23,6 +23,7 @@ defmodule PhoenixBert.Mixfile do
     [
       {:bertex, "~> 1.2"},
       {:plug, "~> 1.4"},
+      {:phoenix, "~> 1.3"},
       {:ex_doc, "~> 0.15", only: :docs},
       {:inch_ex, ">= 0.0.0", only: :docs}
     ]
