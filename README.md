@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/veyond-card/phoenix_bert.svg?branch=master)](https://travis-ci.org/veyond-card/phoenix_bert)
 [![Inline docs](http://inch-ci.org/github/veyond-card/phoenix_bert.svg?branch=master)](http://inch-ci.org/github/veyond-card/phoenix_bert)
 
-This library makes [BERT](https://birt-rpc.org) available to Phoenix so you can encode/decode it.
+This library makes [BERT](http://bert-rpc.org) available to Phoenix so you can encode/decode it.
 
 ## Usage
 
