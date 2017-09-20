@@ -43,8 +43,8 @@ defmodule Plug.Parsers.BERT do
     {:ok, %{}, conn}
   end
 
-  defp decode({:ok, body, _conn}) do
-    Bertex.safe_decode(body)
+  defp decode({:ok, body, conn}) do
+    {:ok, Bertex.safe_decode(body), conn}
   rescue
     e -> raise Plug.Parsers.ParseError, exception: e
   end
