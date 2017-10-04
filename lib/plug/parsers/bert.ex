@@ -13,12 +13,17 @@ defmodule Plug.Parsers.BERT do
   import Plug.Conn
 
   def parse(conn, "application", subtype, _headers, opts) do
-    if subtype == "x-bert" || String.ends_with?(subtype, "+bert") do
-      conn
-      |> read_body(opts)
-      |> decode
-    else
-      {:next, conn}
+    cond do
+      subtype == "x-bert" || String.ends_with?(subtype, "+bert") ->
+        conn
+        |> read_body(opts)
+        |> decode(base64: false)
+      subtype == "x-bert-base64" || String.ends_with?(subtype, "+bert-base64") ->
+        conn
+        |> read_body(opts)
+        |> decode(base64: true)
+      true ->
+        {:next, conn}
     end
   end
 
@@ -27,24 +32,30 @@ defmodule Plug.Parsers.BERT do
     {:next, conn}
   end
 
-  defp decode({:more, _, conn}) do
+  defp decode({:more, _, conn}, _) do
     {:error, :too_large, conn}
   end
 
-  defp decode({:error, :timeout}) do
+  defp decode({:error, :timeout}, _) do
     raise Plug.TimeoutError
   end
 
-  defp decode({:error, _}) do
+  defp decode({:error, _}, _) do
     raise Plug.BadRequestError
   end
 
-  defp decode({:ok, "", conn}) do
+  defp decode({:ok, "", conn}, _) do
     {:ok, %{}, conn}
   end
 
-  defp decode({:ok, body, conn}) do
+  defp decode({:ok, body, conn}, base64: false) do
     {:ok, Bertex.safe_decode(body), conn}
+  rescue
+    e -> raise Plug.Parsers.ParseError, exception: e
+  end
+
+  defp decode({:ok, body, conn}, base64: true) do
+    {:ok, Bertex.safe_decode(Base.decode64!(body)), conn}
   rescue
     e -> raise Plug.Parsers.ParseError, exception: e
   end
