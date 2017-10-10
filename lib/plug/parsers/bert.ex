@@ -55,7 +55,7 @@ defmodule Plug.Parsers.BERT do
   end
 
   defp decode({:ok, body, conn}, base64: true) do
-    {:ok, Bertex.safe_decode(Base.decode64!(body)), conn}
+    {:ok, Bertex.safe_decode(Base.decode64!(String.trim(body))), conn}
   rescue
     e -> raise Plug.Parsers.ParseError, exception: e
   end
