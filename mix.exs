@@ -1,7 +1,7 @@
 defmodule PhoenixBert.Mixfile do
   use Mix.Project
 
-  @version "1.1.3"
+  @version "1.1.4"
   @github "https://github.com/greenboxal/phoenix_bert"
 
   def project do

@@ -49,14 +49,32 @@ defmodule Plug.Parsers.BERT do
   end
 
   defp decode({:ok, body, conn}, base64: false) do
-    {:ok, Bertex.safe_decode(body), conn}
+    {:ok, decode_bert(body), conn}
   rescue
     e -> raise Plug.Parsers.ParseError, exception: e
   end
 
   defp decode({:ok, body, conn}, base64: true) do
-    {:ok, Bertex.safe_decode(Base.decode64!(String.trim(body))), conn}
+    data =
+      body
+      |> String.trim
+      |> Base.decode64!
+      |> decode_bert
+    
+    {:ok, data, conn}
   rescue
     e -> raise Plug.Parsers.ParseError, exception: e
+  end
+
+  defp decode_bert(data) do
+    decode_bert(data, safe: Application.get_env(:phoenix_bert, :safe, true))
+  end
+
+  defp decode_bert(data, safe: true) do
+    Bertex.safe_decode(data)
+  end
+
+  defp decode_bert(data, safe: false) do
+    Bertex.decode(data)
   end
 end
